@@ -12,10 +12,14 @@ Clone repo and `pip install -e .`.
 Currently only PDFs or text documents are supported.
 
 ```python
+from scrapeai import AnthropicClient
 from scrapeai import Folder
 
+# Initialize API client with credentials.
+client = AnthropicClient(cred='zzz')
+
 # Specify collection of PDFs.
-folder = Folder(path='./path/to/folder', files_endwith=['.pdf'])
+folder = Folder(path='./path/to/folder', files_endwith=['.pdf'], client=client)
 
 # Print files in collection.
 print(folder.files)
