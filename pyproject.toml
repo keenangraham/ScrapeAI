@@ -12,6 +12,10 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "scrapeai"
 version = "0.0.1"
+dependencies = [
+    "anthropic==0.34.2",
+    "pypdf==5.0.0",
+]
 
 [tool.setuptools.packages.find]
 where = ["src"]
