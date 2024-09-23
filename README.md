@@ -9,6 +9,8 @@ Clone repo and `pip install -e .`.
 
 # Usage
 
+Currently only PDFs or text documents are supported.
+
 ```python
 from scrapeai import Folder
 
