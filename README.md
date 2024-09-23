@@ -5,7 +5,7 @@ Simple Python wrapper that pulls desired information from a collection of docume
 The main imagined use case is having simple way of getting the same piece of information from a collection of similar documents. For example, getting a list of training data sources from ten research papers.
 
 # Installation
-Clone repo and `pip install -e .`
+Clone repo and `pip install -e .`.
 
 # Usage
 
@@ -13,7 +13,7 @@ Clone repo and `pip install -e .`
 from scrapeai import Folder
 
 # Specify collection of PDFs.
-folder = Folder(path='./path/to/folder', files_endswith=['.pdf'])
+folder = Folder(path='./path/to/folder', files_endwith=['.pdf'])
 
 # Print files in collection.
 print(folder.files)
