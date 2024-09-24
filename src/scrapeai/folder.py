@@ -5,7 +5,7 @@ from itertools import chain
 from .file import File
 
 
-ALLOWED_FILE_SUFFIXES = ['.pdf', '.txt', '.tsv', '.csv', '.md', '*']
+ALLOWED_FILE_SUFFIXES = ['.pdf', '.txt', '.tsv', '.csv', '.md', '.py']
 
 
 class Folder:
@@ -23,6 +23,7 @@ class Folder:
         self.path = path
         self.files_endwith = files_endwith
         self.client = client
+        
 
     def get_files(self):
         return [
@@ -39,3 +40,6 @@ class Folder:
 
     def ask(self, question):
         return self.client.ask(self.get_files(), question)
+
+    def async_ask(self, question):
+        return self.client.async_ask(self.get_files(), question)

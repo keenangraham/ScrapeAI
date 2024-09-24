@@ -8,8 +8,8 @@ from anthropic import AsyncAnthropic
 MODEL = 'claude-3-5-sonnet-20240620'
 
 
-def generate_prompt(document, question):
-    return f'''Examine the following document and see if there is information to answer the question <question>{question}</question>. Print the title of the document (in <title> tags), and a succinct but useful summary that answers the question or say there isn't enough information to answer the question (in <answer> tags).
+def generate_prompt(name, document, question):
+    return f'''Examine the following document named <name>{name}</name> and see if there is information to answer the question <question>{question}</question>. Print the title of the document (in <title> tags) if applicable, and a succinct but useful summary that answers the question or say there isn't enough information to answer the question (in <answer> tags).
 Document:
 <document>{document}</document>'''
 
@@ -43,25 +43,36 @@ class AnthropicClient:
             api_key=api_key
         )
 
-    def get_prompt(self, document, question):
-        return generate_prompt(document, question)
+    def get_prompt(self, name, document, question):
+        return generate_prompt(name, document, question)
 
-    def ask(self, files, question):
+    async def async_ask(self, files, question):
         prompts = [
-            self.get_prompt(f.content(), question)
+            self.get_prompt(f.path.name, f.content(), question)
             for f in files
         ]
-        loop = asyncio.get_event_loop()
-        answers = asyncio.gather(
+        answers = await asyncio.gather(
             *[
                 get_completion(self.client, prompt)
                 for prompt in prompts
             ]
         )
-        loop.run_until_complete(answers)
         final_answers = []
-        for i, result in enumerate(answers.result()):
-            title = re.search(r'<title>(.*?)</title>', result).group(1)
-            answer = re.search(r'<answer>(.*?)</answer>', result).group(1)
+        for i, result in enumerate(answers):
+            title = re.search(r'<title>(.*?)</title>', result, re.DOTALL)
+            if title:
+                title = title.group(1)
+            else:
+                title = 'None'
+            answer = re.search(r'<answer>(.*?)</answer>', result, re.DOTALL)
+            if answer:
+                answer = answer.group(1)
+            else:
+                answer = result
             final_answers.append((files[i].path.name, f'Title: {title}', f'Answer: {answer}'))
         return PrettyAnswers(final_answers)
+
+    def ask(self, files, question):
+        loop = asyncio.get_event_loop()
+        answers = loop.run_until_complete(self.async_ask(files, question))
+        return answers
