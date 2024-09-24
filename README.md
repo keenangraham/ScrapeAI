@@ -40,3 +40,5 @@ print(answer)
 
 # [('machine_learning_paper_189.pdf', 'Used CFAR1000'), ('transformer_paper_193.pdf', 'Used self-labeled cats'), ...]
 ```
+
+Underneath the library uses async requests to Anthropic's API to improve throughput.
