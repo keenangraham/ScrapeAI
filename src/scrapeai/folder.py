@@ -38,4 +38,4 @@ class Folder:
         return [f.path.name for f in self.get_files()]
 
     def ask(self, question):
-        pass
+        return self.client.ask(self.get_files(), question)

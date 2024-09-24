@@ -1,3 +1,6 @@
+from pypdf import PdfReader
+
+
 class File:
 
     def __init__(self, path):
@@ -5,6 +8,12 @@ class File:
 
     def content(self):
         if self.path.name.endswith('.pdf'):
-            pass
+            reader = PdfReader(self.path.resolve())
+            content = ''.join(
+                page.extract_text()
+                for page in reader.pages
+            )
         else:
-            pass
+            with open(self.path.resolve(), 'r') as f:
+                content = f.read()
+        return content
