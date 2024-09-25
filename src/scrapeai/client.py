@@ -15,7 +15,7 @@ Document:
 
 
 async def get_completion(client, prompt):
-    r = await client.messages.create(model='claude-3-5-sonnet-20240620', max_tokens=1024, messages=[{'role': 'user', 'content': prompt}])
+    r = await client.messages.create(model=MODEL, max_tokens=1024, messages=[{'role': 'user', 'content': prompt}])
     return r.content[0].text
 
 
