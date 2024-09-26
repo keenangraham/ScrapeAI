@@ -2,7 +2,7 @@
 Simple Python wrapper that pulls desired information from a collection of documents using Anthropic's LLM API.
 
 # Motivation
-The main imagined use case is having a simple way of getting the same piece of information from a collection of similar documents. For example, getting a list of training data sources, author info, algorithm details, or relevant citations from ten research papers.
+The main imagined use case is having an easy way of getting the same piece of information from a collection of similar documents. For example, getting a list of training data sources, author info, algorithm details, or relevant citations from ten research papers.
 
 See [example.ipynb](https://github.com/keenangraham/ScrapeAI/blob/main/examples.ipynb) for examples of asking questions of text files, ScrapeAI's own source code, and a collection of research papers.
 
